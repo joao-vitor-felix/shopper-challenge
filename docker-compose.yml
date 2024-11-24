@@ -1,16 +1,16 @@
 services:
   postgres:
     image: postgres:latest
-    container_name: ride-app
+    container_name: ride_app
     ports:
-      - "5432:5432"
+      - '5432:5432'
     expose:
-      - "5432"
+      - '5432'
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: ride-app
+      POSTGRES_DB: ride_app
 volumes:
   postgres-data:
