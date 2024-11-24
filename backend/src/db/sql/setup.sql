@@ -1,14 +1,14 @@
 CREATE DATABASE ride_app;
 
 CREATE TABLE
-  customer (
+  IF NOT EXISTS customer (
     id VARCHAR(50) NOT NULL DEFAULT gen_random_uuid (),
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
   );
 
 CREATE TABLE
-  driver (
+  IF NOT EXISTS driver (
     id SERIAL NOT NULL,
     name VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  review (
+  IF NOT EXISTS review (
     id VARCHAR(50) NOT NULL DEFAULT gen_random_uuid (),
     customer_id VARCHAR(50) NOT NULL,
     driver_id INT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  ride (
+  IF NOT EXISTS ride (
     id VARCHAR(50) NOT NULL DEFAULT gen_random_uuid (),
     customer_id VARCHAR(50) NOT NULL,
     driver_id INT NOT NULL,
@@ -50,6 +50,6 @@ CREATE TABLE
     FOREIGN KEY (customer_id) REFERENCES customer (id)
   );
 
-CREATE INDEX idx_customer_id ON ride (customer_id);
+CREATE INDEX IF NOT EXISTS idx_customer_id ON ride (customer_id);
 
-CREATE INDEX idx_driver_id ON ride (driver_id);
+CREATE INDEX IF NOT EXISTS idx_driver_id ON ride (driver_id);
