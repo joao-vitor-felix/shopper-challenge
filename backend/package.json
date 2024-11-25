@@ -1,5 +1,6 @@
 {
   "name": "ride-app-backend",
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/main.ts",
