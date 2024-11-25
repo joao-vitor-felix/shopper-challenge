@@ -1,12 +1,12 @@
-import { ConfirmRideRepositoryPort } from "@/ports/ride";
-import { ConfirmPayload } from "@/schemas/ride";
+import { DriverNotFoundError, InvalidDistanceError } from "@/errors";
 import { CustomerNotFoundError } from "@/errors/customer";
 import { FindCustomerByIdRepositoryPort } from "@/ports/customer";
 import { FindDriverByIdRepositoryPort } from "@/ports/driver";
-import { DriverNotFoundError, InvalidDistanceError } from "@/errors/ride";
+import { ConfirmRideRepositoryPort } from "@/ports/ride";
+import { ConfirmRidesPayload } from "@/schemas/ride";
 
 export interface IConfirmRideUseCase {
-  confirm(ride: ConfirmPayload): Promise<void>;
+  confirm(ride: ConfirmRidesPayload): Promise<void>;
 }
 
 export class ConfirmRideUseCase implements IConfirmRideUseCase {
@@ -15,7 +15,7 @@ export class ConfirmRideUseCase implements IConfirmRideUseCase {
     private findCustomerByIdRepository: FindCustomerByIdRepositoryPort,
     private findDriverByIdRepository: FindDriverByIdRepositoryPort
   ) {}
-  async confirm(ride: ConfirmPayload) {
+  async confirm(ride: ConfirmRidesPayload) {
     const customer = await this.findCustomerByIdRepository.findCustomerById(
       ride.customer_id
     );

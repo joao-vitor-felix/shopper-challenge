@@ -1,22 +1,26 @@
-import { CustomerNotFoundError } from "@/errors/customer";
+import { Request } from "express";
+
 import {
   DriverNotFoundError,
+  internalServerError,
   InvalidDataError,
   InvalidDistanceError
-} from "@/errors/ride";
-import { confirmPayloadSchema } from "@/schemas/ride";
+} from "@/errors";
+import { CustomerNotFoundError } from "@/errors/customer";
+import { confirmRidesPayloadSchema } from "@/schemas/ride";
 import { IConfirmRideUseCase } from "@/use-cases/confirm-ride";
-import { Request } from "express";
 
 export class ConfirmRideController {
   constructor(private confirmRideUseCase: IConfirmRideUseCase) {}
   async confirm(req: Request) {
     try {
       const body = req.body;
-      const parse = confirmPayloadSchema.safeParse(body);
+      const parse = confirmRidesPayloadSchema.safeParse(body);
+
       if (!parse.success) {
         throw new InvalidDataError(parse.error.errors[0].message);
       }
+
       await this.confirmRideUseCase.confirm(parse.data);
       return {
         status: 200,
@@ -57,10 +61,7 @@ export class ConfirmRideController {
         };
       }
 
-      return {
-        status: 500,
-        body: { message: "Internal server error" }
-      };
+      return internalServerError();
     }
   }
 }

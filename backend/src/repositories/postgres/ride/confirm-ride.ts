@@ -1,12 +1,11 @@
-import { Ride } from "@/types/ride";
-import { ConfirmPayload } from "@/schemas/ride";
 import { pool } from "@/db/db";
 import { ConfirmRideRepositoryPort } from "@/ports/ride";
+import { ConfirmRidesPayload } from "@/schemas/ride";
 
 export class ConfirmRidePostgresRepository
   implements ConfirmRideRepositoryPort
 {
-  async confirm(input: ConfirmPayload) {
+  async confirm(input: ConfirmRidesPayload) {
     const client = await pool.connect();
     const query = `
       INSERT INTO
@@ -40,7 +39,7 @@ export class ConfirmRidePostgresRepository
       input.value,
       input.distance
     ];
-    await client.query<Ride>(query, values);
+    await client.query(query, values);
     client.release();
   }
 }
