@@ -7,7 +7,7 @@ export const sharedPayloadSchema = z.object({
       required_error: "customer_id must be provided"
     })
     .trim()
-    .uuid({ message: "id must be a valid UUID" }),
+    .uuid({ message: "customer_id must be a valid UUID" }),
   origin: z.string({
     invalid_type_error: "origin must be a string",
     required_error: "origin must be provided"
@@ -49,7 +49,7 @@ export const confirmRidesPayloadSchema = sharedPayloadSchema
           required_error: "driver.id must be provided"
         })
         .int({ message: "driver.id must be an integer" })
-        .positive({ message: "driver_id must be a positive integer" }),
+        .positive({ message: "driver.id must be a positive integer" }),
       name: z
         .string({
           invalid_type_error: "driver.name must be a string",
