@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { ConfirmRideController } from "@/controllers/confirm-ride";
+import { EstimateRideController } from "@/controllers/estimate-ride";
 import { GetRidesController } from "@/controllers/get-rides";
 import {
   ConfirmRidePostgresRepository,
@@ -8,12 +9,26 @@ import {
   FindDriverByIdPostgresRepository,
   GetRidesPostgresRepository
 } from "@/repositories/postgres";
+import { EstimateRidePostgresRepository } from "@/repositories/postgres/ride/estimate-ride";
 import { ConfirmRideUseCase } from "@/use-cases/confirm-ride";
+import { EstimateRideUseCase } from "@/use-cases/estimate-ride";
 import { GetRidesUseCase } from "@/use-cases/get-rides";
 
 export const rideRouter = Router();
 
-// rideRouter.post("/estimate", (req, res) => {});
+rideRouter.post("/estimate", async (req, res) => {
+  const estimateRideRepository = new EstimateRidePostgresRepository();
+  const findCustomerByIdRepository = new FindCustomerByIdPostgresRepository();
+  const estimateRideUseCase = new EstimateRideUseCase(
+    estimateRideRepository,
+    findCustomerByIdRepository
+  );
+  const estimateRideController = new EstimateRideController(
+    estimateRideUseCase
+  );
+  const { status, body } = await estimateRideController.estimate(req);
+  res.status(status).send(body);
+});
 
 rideRouter.patch("/confirm", async (req, res) => {
   const confirmRideRepository = new ConfirmRidePostgresRepository();
