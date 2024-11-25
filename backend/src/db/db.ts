@@ -1,5 +1,8 @@
-import { Pool } from "pg";
 import fs from "node:fs";
+
+import pg from "pg";
+
+const { Pool } = pg;
 
 export const pool = new Pool({
   host: process.env.POSTGRES_HOST,
@@ -14,7 +17,7 @@ export const pool = new Pool({
 //TODO: run when the app starts
 export const setupDatabase = async () => {
   const client = await pool.connect();
-  let query = fs.readFileSync("./sql/setup.sql", "utf8");
+  const query = fs.readFileSync("./sql/setup.sql", "utf8");
   await client.query(query);
   client.release();
 };
