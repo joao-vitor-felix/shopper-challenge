@@ -1,13 +1,19 @@
-import { ConfirmRideController } from "@/controllers/confirm-ride";
-import { FindCustomerByIdPostgresRepository } from "@/repositories/postgres/customer/find-customer-by-id";
-import { FindDriverByIdPostgresRepository } from "@/repositories/postgres/driver/find-driver-by-id";
-import { ConfirmRidePostgresRepository } from "@/repositories/postgres/ride/confirm-ride";
-import { ConfirmRideUseCase } from "@/use-cases/confirm-ride";
 import { Router } from "express";
+
+import { ConfirmRideController } from "@/controllers/confirm-ride";
+import { GetRidesController } from "@/controllers/get-rides";
+import {
+  ConfirmRidePostgresRepository,
+  FindCustomerByIdPostgresRepository,
+  FindDriverByIdPostgresRepository,
+  GetRidesPostgresRepository
+} from "@/repositories/postgres";
+import { ConfirmRideUseCase } from "@/use-cases/confirm-ride";
+import { GetRidesUseCase } from "@/use-cases/get-rides";
 
 export const rideRouter = Router();
 
-rideRouter.post("/estimate", (req, res) => {});
+// rideRouter.post("/estimate", (req, res) => {});
 
 rideRouter.patch("/confirm", async (req, res) => {
   const confirmRideRepository = new ConfirmRidePostgresRepository();
@@ -23,6 +29,14 @@ rideRouter.patch("/confirm", async (req, res) => {
   res.status(status).json(body);
 });
 
-rideRouter.get("/:customerId", (req, res) => {
-  // const driverId = req.query.driver_id;
+rideRouter.get("/:customerId", async (req, res) => {
+  const getRidesRepository = new GetRidesPostgresRepository();
+  const findByDriverIdRepository = new FindDriverByIdPostgresRepository();
+  const getRidesUseCase = new GetRidesUseCase(
+    getRidesRepository,
+    findByDriverIdRepository
+  );
+  const getRidesController = new GetRidesController(getRidesUseCase);
+  const { status, body } = await getRidesController.getRides(req);
+  res.status(status).json(body);
 });

@@ -8,16 +8,6 @@ export class InvalidDataError extends Error {
   }
 }
 
-export class DriverNotFoundError extends Error {
-  constructor(
-    message = "Driver not found",
-    readonly code = "DRIVER_NOT_FOUND"
-  ) {
-    super(message);
-    this.name = "DriverNotFoundError";
-  }
-}
-
 export class InvalidDistanceError extends Error {
   constructor(
     message = "Invalid distance",
@@ -26,4 +16,24 @@ export class InvalidDistanceError extends Error {
     super(message);
     this.name = "InvalidDistanceError";
   }
+}
+
+export class NoRidesFoundError extends Error {
+  constructor(
+    message = "No rides found",
+    readonly code = "NO_RIDES_FOUND"
+  ) {
+    super(message);
+    this.name = "NoRidesFoundError";
+  }
+}
+
+export function internalServerError() {
+  return {
+    status: 500,
+    body: {
+      error_code: "SERVER_ERROR",
+      message: "Internal server error"
+    }
+  };
 }
