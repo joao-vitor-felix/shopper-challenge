@@ -27,7 +27,6 @@ export class ConfirmRideController {
         body: { success: true }
       };
     } catch (error) {
-      console.log(error);
       if (error instanceof InvalidDataError) {
         return {
           status: 400,
