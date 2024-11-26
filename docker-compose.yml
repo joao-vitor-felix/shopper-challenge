@@ -1,16 +1,42 @@
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    container_name: ride_app_api
+    ports:
+      - '8080:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+    environment:
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      PORT: 8080
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ride_app
+      POSTGRES_HOST: postgres
+    restart: unless-stopped
   postgres:
     image: postgres:latest
-    container_name: ride_app
+    container_name: ride_app_postgres
     ports:
       - '5432:5432'
-    expose:
-      - '5432'
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
       POSTGRES_DB: ride_app
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    restart: unless-stopped
 volumes:
   postgres-data:
