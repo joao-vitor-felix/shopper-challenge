@@ -107,3 +107,33 @@ VALUES
     10.00,
     10000
   );
+
+INSERT INTO
+  review (customer_id, driver_id, rating, comment)
+VALUES
+  (
+    '41b37ad0-9225-4b8e-8ed4-dba666c67cdc',
+    1,
+    5.0,
+    'Muito bom!!!!!!!!!!!!!!!!!!!'
+  );
+
+INSERT INTO
+  review (customer_id, driver_id, rating, comment)
+VALUES
+  (
+    '41b37ad0-9225-4b8e-8ed4-dba666c67cdc',
+    2,
+    4.5,
+    'Motorista atencioso!'
+  );
+
+INSERT INTO
+  review (customer_id, driver_id, rating, comment)
+VALUES
+  (
+    '41b37ad0-9225-4b8e-8ed4-dba666c67cdc',
+    3,
+    1.0,
+    'Motorista apressado!'
+  );
