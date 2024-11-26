@@ -8,16 +8,24 @@ export const sharedPayloadSchema = z.object({
     })
     .trim()
     .uuid({ message: "customer_id must be a valid UUID" }),
-  origin: z.string({
-    invalid_type_error: "origin must be a string",
-    required_error: "origin must be provided"
-  }),
+  origin: z
+    .string({
+      invalid_type_error: "origin must be a string",
+      required_error: "origin must be provided"
+    })
+    .trim()
+    .min(1, {
+      message: "origin must be provided."
+    }),
   destination: z
     .string({
       invalid_type_error: "destination must be a string",
       required_error: "destination must be provided"
     })
     .trim()
+    .min(1, {
+      message: "destination must be provided"
+    })
 });
 
 export const estimateRidesPayloadSchema = sharedPayloadSchema.refine(
@@ -41,7 +49,10 @@ export const confirmRidesPayloadSchema = sharedPayloadSchema
         invalid_type_error: "duration must be a string",
         required_error: "duration is required"
       })
-      .trim(),
+      .trim()
+      .min(1, {
+        message: "duration is required"
+      }),
     driver: z.object({
       id: z
         .number({
@@ -56,6 +67,9 @@ export const confirmRidesPayloadSchema = sharedPayloadSchema
           required_error: "driver.name must be provided"
         })
         .trim()
+        .min(1, {
+          message: "driver.name is required"
+        })
     }),
     value: z
       .number({
@@ -74,6 +88,7 @@ export const getRidesPayloadSchema = z.object({
       required_error: "customer_id must be provided",
       invalid_type_error: "customer_id must be a string"
     })
+    .trim()
     .uuid({ message: "customer_id must be a valid UUID" }),
   driver_id: z
     .number({
