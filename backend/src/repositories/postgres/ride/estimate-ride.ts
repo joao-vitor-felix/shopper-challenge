@@ -21,7 +21,7 @@ export class EstimateRidePostgresRepository
 {
   async estimate(input: EstimateRideInput): Promise<RideOptions> {
     const { data: directions } = await axios.get<DirectionsResponse>(
-      `https://maps.googleapis.com/maps/api/directions/json?origin=${input.origin}&destination=${input.destination}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+      `https://maps.googleapis.com/maps/api/directions/json?origin=${input.origin}&destination=${input.destination}&key=${process.env.GOOGLE_API_KEY}`
     );
 
     const client = await pool.connect();
