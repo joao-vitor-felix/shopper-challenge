@@ -1,8 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import { Link, useNavigate, useSearchParams } from "react-router";
 
 import { Button } from "@/components/Button";
+import Container from "@/components/Container";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Image } from "@/components/Image";
 import { Input } from "@/components/Input";
@@ -10,10 +13,19 @@ import { InputGroup } from "@/components/InputGroup";
 import {
   EstimateRidesPayload,
   estimateRidesPayloadSchema
-} from "@/schemas/estimate-ride";
+} from "@/schemas/estimateRide";
 
 export const EstimateRidePage = () => {
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const error = searchParams.get("error");
+
+  useEffect(() => {
+    if (error === "missing_params") {
+      toast.error("É necessário informar origem, destino e id do usuário");
+    }
+  }, [error]);
+
   const {
     register,
     formState: { errors },
@@ -27,19 +39,20 @@ export const EstimateRidePage = () => {
     resolver: zodResolver(estimateRidesPayloadSchema)
   });
 
-  const onSubmit = (data: EstimateRidesPayload) => {
+  const onSubmit = (data: EstimateRidesPayload) =>
     navigate(
-      `/confirm?origin=${data.origin}&destination=${data.destination}&customerId=${data.customerId}`
+      `/confirm?origin=${data.origin}&destination=${data.destination}&customer_id=${data.customerId}`
     );
-  };
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-bg-color-white-50 bg-background-shape">
-      <Image
-        src="/logo-shopper.png"
-        className="mb-14 block lg:hidden"
-        aria-label="Logo da Shopper"
-      />
+    <Container>
+      <Link to="/">
+        <Image
+          src="/logo-shopper.png"
+          className="mb-14 block lg:hidden"
+          aria-label="Logo da Shopper"
+        />
+      </Link>
       <Image
         src="/logo-shopper-desktop.png"
         className="mb-14 hidden lg:block"
@@ -103,6 +116,6 @@ export const EstimateRidePage = () => {
         src="/shape-footer-desktop.png"
         className="absolute -bottom-1 left-0 mt-8 hidden lg:block"
       />
-    </div>
+    </Container>
   );
 };
