@@ -7,8 +7,6 @@ import tailwind from "eslint-plugin-tailwindcss";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-//TODO: add testing library plugin
-
 export default tseslint.config(
   { ignores: ["dist"] },
   {
