@@ -31,7 +31,6 @@ export function Directions({ origin, destination }: DirectionsProps) {
         provideRouteAlternatives: false
       })
       .then(response => {
-        console.log(response);
         directionsRenderer.setDirections(response);
       });
 
