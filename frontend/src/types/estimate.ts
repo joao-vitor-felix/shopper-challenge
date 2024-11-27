@@ -20,4 +20,7 @@ export type EstimateResponse = {
     };
     value: number;
   }[];
+  routeResponse: {
+    status: "OK" | "NOT_FOUND" | "ZERO_RESULTS";
+  };
 };

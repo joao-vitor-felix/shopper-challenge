@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 
 import { ConfirmRidePage } from "./pages/ConfirmRidePage/ConfirmRidePage";
 import { EstimateRidePage } from "./pages/EstimateRidePage";
+import { RideHistoryPage } from "./pages/RideHistoryPage/RideHistoryPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,7 +22,7 @@ const App = () => {
           <Route path="/">
             <Route index element={<EstimateRidePage />} />
             <Route path="confirm" element={<ConfirmRidePage />} />
-            <Route path="rides" element={<></>} />
+            <Route path="rides" element={<RideHistoryPage />} />
           </Route>
         </Routes>
         <Toaster />

@@ -14,3 +14,19 @@
     @apply h-full font-manrope;
   }
 }
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: rgba(141, 230, 203, 1);
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(8, 200, 142, 1);
+    border-radius: 100vh;
+  }
+}

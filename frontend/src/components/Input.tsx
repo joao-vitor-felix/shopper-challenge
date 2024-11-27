@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="relative flex">
         <input
           className={cn(
-            "h-8 rounded-[4px] rounded-r-none bg-primary-color-violet-500 py-[10px] pl-[10px] text-xs lg:text-base text-white-50 outline-none focus:ring-2 focus:ring-secondary-color-green-400 focus:ring-inset w-[85%] lg:h-10",
+            "h-8 rounded-[4px] rounded-r-none bg-primary-color-violet-500 py-[10px] pl-[10px] text-xs lg:text-base text-white-50 outline-none focus:ring-2 focus:ring-secondary-color-green-400 focus:ring-inset w-[85%] lg:h-10 pr-2",
             className
           )}
           {...props}
