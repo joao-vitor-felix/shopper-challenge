@@ -7,7 +7,7 @@ export interface ConfirmRideRepositoryPort {
 }
 
 export interface EstimateRideRepositoryPort {
-  estimate(input: EstimateRideInput): Promise<RideOptions>;
+  estimate(input: EstimateRideInput): Promise<RideOptions | null>;
 }
 
 export interface GetRidesRepositoryPort {

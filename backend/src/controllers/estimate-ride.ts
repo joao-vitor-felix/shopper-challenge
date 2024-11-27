@@ -26,6 +26,10 @@ export class EstimateRideController {
         destination: parse.data.destination
       });
 
+      if (!rideOptions) {
+        throw new InvalidDataError();
+      }
+
       return {
         status: 200,
         body: rideOptions

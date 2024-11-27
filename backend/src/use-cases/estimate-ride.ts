@@ -10,7 +10,7 @@ export type EstimateRideInput = {
 };
 
 export interface IEstimateRideUseCase {
-  estimate(input: EstimateRideInput): Promise<RideOptions>;
+  estimate(input: EstimateRideInput): Promise<RideOptions | null>;
 }
 
 export class EstimateRideUseCase {

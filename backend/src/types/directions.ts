@@ -21,4 +21,5 @@ export type DirectionsResponse = {
       end_address: string;
     }[];
   }[];
+  status: "OK" | "NOT_FOUND" | "ZERO_RESULTS";
 };

@@ -19,10 +19,14 @@ type Driver = {
 export class EstimateRidePostgresRepository
   implements EstimateRideRepositoryPort
 {
-  async estimate(input: EstimateRideInput): Promise<RideOptions> {
+  async estimate(input: EstimateRideInput): Promise<RideOptions | null> {
     const { data: directions } = await axios.get<DirectionsResponse>(
       `https://maps.googleapis.com/maps/api/directions/json?origin=${input.origin}&destination=${input.destination}&key=${process.env.GOOGLE_API_KEY}`
     );
+
+    if (directions.status !== "OK") {
+      return null;
+    }
 
     const client = await pool.connect();
     const query = `

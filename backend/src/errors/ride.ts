@@ -1,6 +1,6 @@
 export class InvalidDataError extends Error {
   constructor(
-    message: string,
+    message = "Invalid data",
     readonly code = "INVALID_DATA"
   ) {
     super(message);
