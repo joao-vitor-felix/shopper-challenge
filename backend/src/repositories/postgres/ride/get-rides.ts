@@ -43,7 +43,7 @@ export class GetRidesPostgresRepository implements GetRidesRepositoryPort {
             id: row.driver_id,
             name: row.driver_name
           },
-          value: row.amount
+          value: parseFloat(row.amount.toString())
         };
       })
     };
