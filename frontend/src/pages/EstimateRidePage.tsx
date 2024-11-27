@@ -1,8 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
@@ -16,15 +14,7 @@ import {
 } from "@/schemas/estimateRide";
 
 export const EstimateRidePage = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const error = searchParams.get("error");
-
-  useEffect(() => {
-    if (error === "missing_params") {
-      toast.error("É necessário informar origem, destino e id do usuário");
-    }
-  }, [error]);
 
   const {
     register,
@@ -46,18 +36,18 @@ export const EstimateRidePage = () => {
 
   return (
     <Container>
-      <Link to="/">
+      <Link to="/" className="mb-14">
         <Image
           src="/logo-shopper.png"
-          className="mb-14 block lg:hidden"
+          className="block lg:hidden"
+          aria-label="Logo da Shopper"
+        />
+        <Image
+          src="/logo-shopper-desktop.png"
+          className="hidden lg:block"
           aria-label="Logo da Shopper"
         />
       </Link>
-      <Image
-        src="/logo-shopper-desktop.png"
-        className="mb-14 hidden lg:block"
-        aria-label="Logo da Shopper"
-      />
       <form className="flex w-72 flex-col" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-7">
           <InputGroup>
