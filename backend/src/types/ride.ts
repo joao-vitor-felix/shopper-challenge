@@ -3,8 +3,8 @@ export type Ride = {
   customer_id: string;
   driver_id: number;
   created_at: string;
-  origin: string;
-  destination: string;
+  origin_location: string;
+  destination_location: string;
   estimated_duration_seconds: number;
   amount: number;
   distance_meters: number;

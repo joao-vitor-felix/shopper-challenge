@@ -35,8 +35,8 @@ export class GetRidesPostgresRepository implements GetRidesRepositoryPort {
         return {
           id: row.id,
           date: row.created_at,
-          origin: row.origin,
-          destination: row.destination,
+          origin: row.origin_location,
+          destination: row.destination_location,
           distance: row.distance_meters,
           duration: row.estimated_duration_seconds.toString(),
           driver: {
