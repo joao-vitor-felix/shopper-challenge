@@ -5,9 +5,9 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "background-shape": "url('./public/background.png')",
-        "footer-shape": "url('./public/shape-footer.png')",
-        "logo-shopper": "url('./public/logo-shopper.png')"
+        "background-shape": "url('/background.png')",
+        "footer-shape": "url('/shape-footer.png')",
+        "logo-shopper": "url('/logo-shopper.png')"
       },
       colors: {
         "bg-color-white-50": "rgba(255, 255, 255, 1)",
