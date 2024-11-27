@@ -1,5 +1,6 @@
 import { Loader2, Star } from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 import { Button } from "@/components/Button";
 import { useConfirmRide } from "@/hooks/useConfirmRide";
@@ -19,12 +20,14 @@ type AvailableDriverCardProps = {
 };
 
 export const AvailableDriverCard = (props: AvailableDriverCardProps) => {
+  const navigate = useNavigate();
   const { mutate, isPending } = useConfirmRide({
     onError() {
       toast.error("Erro ao confirmar corrida, tente novamente");
     },
     onSuccess() {
       toast.success("Corrida confirmada com sucesso!");
+      navigate("/rides");
     }
   });
 
