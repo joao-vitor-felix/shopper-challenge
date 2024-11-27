@@ -1,18 +1,32 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router";
 
+import { ConfirmRidePage } from "./pages/ConfirmRidePage/ConfirmRidePage";
 import { EstimateRidePage } from "./pages/EstimateRidePage";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2
+    }
+  }
+});
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<EstimateRidePage />} />
-          <Route path="confirm" element={<></>} />
-          <Route path="rides" element={<></>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<EstimateRidePage />} />
+            <Route path="confirm" element={<ConfirmRidePage />} />
+            <Route path="rides" element={<></>} />
+          </Route>
+        </Routes>
+        <Toaster />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

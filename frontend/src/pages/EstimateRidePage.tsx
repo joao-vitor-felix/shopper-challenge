@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate, useSearchParams } from "react-router";
 
 import { Button } from "@/components/Button";
-import Container from "@/components/Container";
+import { Container } from "@/components/Container";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Image } from "@/components/Image";
 import { Input } from "@/components/Input";
@@ -94,9 +94,7 @@ export const EstimateRidePage = () => {
             )}
           </InputGroup>
         </div>
-        <Button className="mt-8 self-center text-xs lg:text-base lg:duration-300 lg:ease-in lg:hover:border lg:hover:border-secondary-color-green-500 lg:hover:bg-white-50 lg:hover:text-secondary-color-green-500">
-          Buscar viagem
-        </Button>
+        <Button className="mt-8 self-center">Buscar viagem</Button>
       </form>
       <Image
         src="/illustration-1.png"
