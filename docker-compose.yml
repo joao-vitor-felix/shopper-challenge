@@ -20,6 +20,18 @@ services:
       POSTGRES_DB: ride_app
       POSTGRES_HOST: postgres
     restart: unless-stopped
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    environment:
+      VITE_GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - 80:3000
   postgres:
     image: postgres:latest
     container_name: ride_app_postgres
