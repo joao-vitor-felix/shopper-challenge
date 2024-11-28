@@ -8,7 +8,12 @@ export const rideHistoryPayloadSchema = z.object({
     })
     .trim()
     .uuid({ message: "O id do usuário deve ser um UUID." }),
-  driverId: z.string().trim().optional()
+  driver: z
+    .object({
+      id: z.number().int().positive(),
+      name: z.string()
+    })
+    .optional()
 });
 
 export type RideHistoryPayload = z.infer<typeof rideHistoryPayloadSchema>;

@@ -41,11 +41,13 @@ export const EstimateRidePage = () => {
           src="/logo-shopper.png"
           className="block lg:hidden"
           aria-label="Logo da Shopper"
+          title="Logo da Shopper"
         />
         <Image
           src="/logo-shopper-desktop.png"
           className="hidden lg:block"
           aria-label="Logo da Shopper"
+          title="Logo da Shopper"
         />
       </Link>
       <form className="flex w-72 flex-col" onSubmit={handleSubmit(onSubmit)}>
@@ -88,21 +90,21 @@ export const EstimateRidePage = () => {
       </form>
       <Image
         src="/illustration-1.png"
-        className="mt-8 block lg:hidden"
+        className="mt-8 block xl:hidden"
         aria-label="Ilustração de uma pessoa apontando em direção ao horizonte"
       />
       <Image
         src="/illustration-1-desktop.png"
-        className="mt-8 hidden lg:block"
+        className="mt-8 hidden xl:block"
         aria-label="Ilustração de uma pessoa apontando em direção ao horizonte"
       />
       <Image
         src="/shape-footer.png"
-        className="absolute -bottom-2 left-0 mt-8 block lg:hidden"
+        className="absolute -bottom-2 left-0 mt-8 block xl:hidden"
       />
       <Image
         src="/shape-footer-desktop.png"
-        className="absolute -bottom-1 left-0 mt-8 hidden lg:block"
+        className="absolute -bottom-1 left-0 mt-8 hidden xl:block"
       />
     </Container>
   );

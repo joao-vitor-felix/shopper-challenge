@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router";
 
@@ -10,6 +10,7 @@ import { ErrorMessage } from "@/components/ErrorMessage";
 import { Image } from "@/components/Image";
 import { Input } from "@/components/Input";
 import { InputGroup } from "@/components/InputGroup";
+import { SelectDriver } from "@/components/SelectDriver";
 import { useGetRideHistory } from "@/hooks/useGetRideHistory";
 
 import { DriverHistoryCard } from "./components/DriverHistoryCard";
@@ -23,26 +24,35 @@ export const RideHistoryPage = () => {
     register,
     formState: { errors },
     handleSubmit,
-    getValues
+    control,
+    watch,
+    reset
   } = useForm<RideHistoryPayload>({
     defaultValues: {
       customerId: "41b37ad0-9225-4b8e-8ed4-dba666c67cdc",
-      driverId: ""
+      driver: undefined
     },
     resolver: zodResolver(rideHistoryPayloadSchema)
   });
 
-  const { customerId, driverId } = getValues();
+  const customerId = watch("customerId");
+  const driver = watch("driver");
   const { data, isLoading, error, refetch } = useGetRideHistory({
     customerId,
-    driverId: driverId ? parseInt(driverId) : undefined
+    driver
   });
 
   if (error) {
     toast.error("Erro ao buscar histórico de corridas, tente novamente");
   }
 
-  const onSubmit = () => refetch();
+  const onSubmit = (data: RideHistoryPayload) => {
+    reset({
+      customerId: data.customerId,
+      driver: data.driver
+    });
+    refetch();
+  };
 
   return (
     <Container className="p-5 lg:px-0 lg:py-4">
@@ -51,14 +61,15 @@ export const RideHistoryPage = () => {
           src="/logo-shopper.png"
           className="block lg:hidden"
           aria-label="Logo da Shopper"
+          title="Logo da Shopper"
         />
         <Image
           src="/logo-shopper-desktop.png"
           className="hidden lg:block"
           aria-label="Logo da Shopper"
+          title="Logo da Shopper"
         />
       </Link>
-
       <form
         className="mb-8 flex w-52 flex-col items-center justify-center gap-7 lg:w-full lg:flex-row"
         onSubmit={handleSubmit(onSubmit)}
@@ -75,25 +86,41 @@ export const RideHistoryPage = () => {
               <ErrorMessage>{errors.customerId.message}</ErrorMessage>
             )}
           </InputGroup>
-          <InputGroup>
-            <Input
-              icon="id"
-              id="id"
-              placeholder="Selecione o motorista"
-              {...register("driverId")}
-            />
-            {errors.driverId?.message && (
-              <ErrorMessage>{errors.driverId.message}</ErrorMessage>
+          <Controller
+            control={control}
+            name="driver"
+            render={({ field }) => (
+              <SelectDriver
+                onChange={field.onChange}
+                value={field.value}
+                placeholder="Selecione o motorista"
+                //TODO: Replace with real data
+                drivers={[
+                  {
+                    id: 1,
+                    name: "Homer Simpson"
+                  },
+                  {
+                    id: 2,
+                    name: "Dominic Toretto"
+                  },
+                  {
+                    id: 3,
+                    name: "James Bond"
+                  }
+                ]}
+              />
             )}
-          </InputGroup>
+          />
         </div>
-        <Button className="self-center lg:self-start">Aplicar</Button>
+        <Button className="self-center lg:w-28 lg:self-start">Aplicar</Button>
       </form>
 
       {isLoading && (
         <Loader2 className="size-10 animate-spin text-secondary-color-green-500" />
       )}
-      <div className="scrollbar flex w-full flex-col items-center gap-4 overflow-y-auto pr-2 lg:w-[546px]">
+
+      <div className="scrollbar flex w-full flex-col items-center gap-4 overflow-y-auto pr-2 md:w-[546px]">
         {!isLoading &&
           data &&
           data.rides.map(ride => (
